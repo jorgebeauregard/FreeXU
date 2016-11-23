@@ -34,4 +34,9 @@ class User extends Authenticatable
     public function project_claimer(){
         return $this->belongsTo('App\Project');
     }
+
+    public function getId()
+    {   
+        return $this->id;
+    }
 }

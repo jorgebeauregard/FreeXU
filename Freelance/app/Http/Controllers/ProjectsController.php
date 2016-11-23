@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Project;
 use App\Category;
+use Auth;
 
 class ProjectsController extends Controller
 {
@@ -17,7 +18,7 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        return view('projects.index', ['projects'=>Project::all()]);
+        return view('projects.index', ['projects'=>Project::all(),'id'=> Auth::user()->getId()]);
     }
 
     /**
@@ -42,6 +43,8 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
+        $id = Auth::user()->getId();
+
         $this->validate($request, [
             "name" => "required|string",
             "description" => "required|string",
@@ -64,7 +67,7 @@ class ProjectsController extends Controller
 
         $idCat = Category::where('name', $titulos[$indexCat])->first()->id;
 
-        Project::create(["name"=>$request->name, "description"=>$request->description, "image_path"=>$path, "category_id"=>$idCat, "creator_id"=>1]);
+        Project::create(["name"=>$request->name, "description"=>$request->description, "image_path"=>$path, "category_id"=>$idCat, "creator_id"=>$id]);
 
         return redirect()->route("projects.create");
     }
