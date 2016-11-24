@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Project;
 use App\Category;
+Use Auth;
 
 class HomeController extends Controller
 {
@@ -26,6 +27,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home', ['projects'=>Project::all()]);
+        return view('home', ['projects'=>Project::all(), 'name'=>Auth::user()->getName()]);
     }
 }

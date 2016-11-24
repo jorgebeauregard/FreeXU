@@ -43,7 +43,7 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
-        $id = Auth::user()->getId();
+        $id_user = Auth::user()->getId();
 
         $this->validate($request, [
             "name" => "required|string",
@@ -67,7 +67,7 @@ class ProjectsController extends Controller
 
         $idCat = Category::where('name', $titulos[$indexCat])->first()->id;
 
-        Project::create(["name"=>$request->name, "description"=>$request->description, "image_path"=>$path, "category_id"=>$idCat, "creator_id"=>$id]);
+        Project::create(["name"=>$request->name, "description"=>$request->description, "image_path"=>$path, "category_id"=>$idCat, "creator_id"=>$id_user]);
 
         return redirect()->route("projects.create");
     }
@@ -112,8 +112,11 @@ class ProjectsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $project = Project::where('id', $id)->firstOrFail();
+        $deleted = $project->delete();
+
+        return redirect()->route('projects.index');
     }
 }

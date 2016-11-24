@@ -27,7 +27,7 @@
         </div>
         <br>
         <div class="form-group">
-          {!! Form::submit('Submit project', ['class' => 'btn btn-primary']) !!}
+          {!! Form::submit('Submit project', ['class' => 'btn btn-success']) !!}
         </div>
       {!! Form::close() !!}
   </div>
