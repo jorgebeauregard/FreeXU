@@ -18,7 +18,11 @@
                       <td>{{$project->id}}</td>
                       <td>{{$project->name}}</td>
                       <td>{{ App\Category::find($project->category_id)->name }}</td>
-                      <td><a href="" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                      <td>
+                      {!! Form::open( [ 'method' => 'GET', 'route'=>['projects.edit', $project->id]]) !!}
+                      <button class="btn btn-primary"><i class="fa fa-pencil"></i></button>
+                      {!! Form::close() !!}
+                      </td>
                       
                       <td>
                       {!! Form::open( ['method'=>'DELETE', 'route'=>['projects.destroy', $project->id]]) !!}

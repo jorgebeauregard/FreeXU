@@ -91,7 +91,13 @@ class ProjectsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $project = Project::where('id', $id)->firstOrFail();
+
+        $names = Category::select('name')->get();
+        foreach ($names as $name) {
+            $titulos[] = $name->name;
+        }
+        return view('projects.edit', ['titulos'=>$titulos, 'project'=>$project]);
     }
 
     /**
@@ -103,7 +109,35 @@ class ProjectsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $id_user = Auth::user()->getId();
+        $project = Project::where('id', $id)->firstOrFail();
+
+
+        $this->validate($request, [
+            "name" => "required|string",
+            "description" => "required|string",
+            "image" => "image",
+            "category" => "required|string",
+            ]);
+
+        if($request->hasFile("image")){
+            $path = $request->image->store('public');
+        }
+        else{
+            $path = "public/noImgUser.png";
+        }
+
+        $indexCat = $request->category;
+        $names = Category::select('name')->get();
+        foreach ($names as $name) {
+            $titulos[] = $name->name;
+        }
+
+        $idCat = Category::where('name', $titulos[$indexCat])->first()->id;
+
+        $project->update($request->all());
+
+        return redirect()->route("projects.index");
     }
 
     /**
