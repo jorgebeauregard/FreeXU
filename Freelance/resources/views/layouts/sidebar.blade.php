@@ -19,15 +19,13 @@
             <div class="column col-sm-2" id="sidebar">
                 <a class="logo" href="#">F</a>
                 <ul class="nav">
-                    <li><a href="/"><h4>Home</h4></a>
+                    <li><a href="/home"><h4>Home</h4></a>
                     </li>
-                    <li><a><h4>Claimed projects</h4></a>
+                    <li><a href="{{route('projects.index2')}}"><h4>Claimed projects</h4></a>
                     </li>
                     <li><a href="{{route('projects.index')}}"><h4>Submitted projects</h4></a>
                     </li>
                     <li><a href="{{route('projects.create')}}"><h4>Add a project</h4></a>
-                    </li>
-                    <li><a><h4>Profile</h4></a>
                     </li>
                 </ul>
                 <ul class="nav hidden-xs" id="sidebar-footer">

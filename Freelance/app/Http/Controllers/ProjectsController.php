@@ -21,6 +21,11 @@ class ProjectsController extends Controller
         return view('projects.index', ['projects'=>Project::all(),'id'=> Auth::user()->getId()]);
     }
 
+    public function index2()
+    {
+        return view('projects.index2', ['projects'=>Project::all(),'id'=> Auth::user()->getId()]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -80,7 +85,8 @@ class ProjectsController extends Controller
      */
     public function show($id)
     {
-        //
+        $project = Project::where('id', $id)->firstOrFail();
+        return view('projects.show', ['project' => $project,'id'=> Auth::user()->getId()]);
     }
 
     /**
@@ -139,6 +145,23 @@ class ProjectsController extends Controller
 
         return redirect()->route("projects.index");
     }
+
+    public function update_claimer(Request $request, $id)
+    {
+        $project = Project::where('id', $id)->firstOrFail();
+        $project->claimer_id = Auth::user()->getId();
+        $project->save();
+        return redirect()->route("projects.index2");
+    }
+
+    public function unclaim_project(Request $request, $id)
+    {
+        $project = Project::where('id', $id)->firstOrFail();
+        $project->claimer_id = NULL;
+        $project->save();
+        return redirect()->route("home.index");
+    }
+
 
     /**
      * Remove the specified resource from storage.
