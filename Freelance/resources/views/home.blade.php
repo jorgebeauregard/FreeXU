@@ -4,21 +4,28 @@
 
 @section('content')
 
-    @foreach($projects as $project)
-      @if($project->claimer_id == NULL)  
+    @foreach($projects->chunk(4) as $project)
         <div class="row">
-          
-          <div class="col-sm-10">
-            <h3><a href="{{ route('projects.show', [ $project->id]) }}">{{ $project->name}}</a></h3>
-            <h4><span class="label label-default">{{ App\Category::find($project->category_id)->name }}</span></h4><h4>
-            <small class="text-muted">By {{App\User::find($project->creator_id)->name }} • <a href="#" class="text-muted">Read More</a></small>
-          </h4>
-        </div>
-        <div class="col-sm-2">
-          <a href="#" class="pull-right"><img src="{{Storage::url($project->image_path)}}" class="img-circle"></a>
-        </div> 
-        </div>
-      @endif
+        @foreach($project as $projects)
+            @if($projects->claimer_id == NULL)
+                @if($projects->creator_id != $id)  
+                    <div class="col-sm-5 col-md-4">
+                      <div class="thumbnail">
+                        <a href="#" ><img src="{{Storage::url($projects->image_path)}}" class="img-responsive"></a>
+                      <div class="caption">
+                        <h3>{{$projects->name}}</h3>
+                        <h4><span class="label label-default">{{ App\Category::find($projects->category_id)->name }}</span><small class="text-muted"> By {{App\User::find($projects->creator_id)->name }} </small></h4>
+                        <p class="description">{{  str_limit($projects->description, 170, "...") }}</p>                            
+                        <div>
+                        <a href="{{ route('projects.show', [ $projects->id]) }}" class="btn btn-primary" role="button">Read more</a>
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+                @endif
+            @endif
+      @endforeach
+    </div>
     @endforeach
 
 @endsection
