@@ -15,6 +15,13 @@ class HomeController extends Controller
      *
      * @return void
      */
+
+
+    public function landing()
+    {
+        return view('landing', ['projects'=>Project::all()]);
+    }
+        
     public function __construct()
     {
         $this->middleware('auth');
@@ -29,4 +36,5 @@ class HomeController extends Controller
     {
         return view('home', ['projects'=>Project::all(), 'name'=>Auth::user()->getName(), 'id'=> Auth::user()->getId()]);
     }
+
 }

@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::group(['middleware'=>'auth'], function(){
 
 	Route::get('/home',['as'=>'home.index', 'uses'=>'HomeController@index']);
@@ -25,10 +26,13 @@ Route::group(['middleware'=>'auth'], function(){
 
 	Route::get('logout', function(){
 		Auth::logout();
-		return redirect()->route('login');
+		return redirect()->route('landing.landing');
 	})->name('logout');
 
 });
 
 Auth::routes();
+
+Route::get('/',['as'=>'landing.landing', 'uses'=>'LandingController@landing']);
+
 
