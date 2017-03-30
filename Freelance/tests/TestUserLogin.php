@@ -15,7 +15,6 @@ class TestUserLogin extends TestCase
             ->type('secret', 'password')
             ->type('secret', 'password_confirmation')
             ->press('Register')
-            ->click('Logout')
             ->visit('login')
             ->type('juanfg@outlook.com', 'email')
             ->type('secret', 'password')

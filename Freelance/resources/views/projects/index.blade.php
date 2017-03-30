@@ -20,14 +20,14 @@
                       <td>{{ App\Category::find($project->category_id)->name }}</td>
                       <td>
                       {!! Form::open( [ 'method' => 'GET', 'route'=>['projects.edit', $project->id]]) !!}
-                      <button class="btn btn-primary btn-block"><i class="fa fa-pencil"></i></button>
+                      <button class="btn btn-primary btn-block" id="edit"><i class="fa fa-pencil"></i></button>
                       {!! Form::close() !!}
 
                       </td>
                       
                       <td>
                       {!! Form::open( ['method'=>'DELETE', 'route'=>['projects.destroy', $project->id]]) !!}
-                      <button class="btn btn-danger btn-block"><i class="fa fa-trash"></i></button>
+                      <button class="btn btn-danger btn-block" id="delete"><i class="fa fa-trash"></i></button>
                       {!! Form::close() !!}
                       </td>
                       
